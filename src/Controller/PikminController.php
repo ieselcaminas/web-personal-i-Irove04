@@ -17,17 +17,12 @@ final class PikminController extends AbstractController
     ];
 
     #[Route('/pikmins/{codigo}', name: 'ficha_contacto')]
-    public function ficha(ManagerRegistry $doctrine, $codigo):Response{
-       $resultado = ($this->pikmins[$codigo] ?? null);
+    public function ficha($codigo): Response
+    {
+        $resultado = ($this->contactos[$codigo] ?? null);
 
-       if($resultado){
-       $html = "<ul>";
-           $html = "<li>" . $codigo . "</li>";
-           $html = "<li>" . $resultado['nombre'] . "</li>";
-           $html = "<li>". $resultado['color'] . "</li>";
-       $html = "</ul>";
-       return new Response("<$html><body>$html<body>");
-       }
-       return new Response("<html><body>Pikmin $codigo no encontrado</body>");
+        return $this->render('ficha_pikmin.html.twig', [
+            'contacto' => $resultado
+        ]);
     }
 }
