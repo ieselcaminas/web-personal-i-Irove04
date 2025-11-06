@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block title %}PIKMIN{% endblock %}
 {% block body%}
-        <h1>Ficha del contacto</h1>
-            {% if contacto %}
+        <h1>Ficha del pikmin</h1>
+            {% if pikmin %}
                 <ul>
-                    <li><strong>{{ contacto.nombre }}</strong></li>
-                    <li><strong>Color </strong>{{ contacto.color }}</li>
+                    <li><strong>{{ pikmin.nombre }}</strong></li>
+                    <li><strong>Color </strong>{{ pikmin.color }}</li>
                 </ul>
             {% else %}
-                <h4>Contacto no encontrado</h4>
+                <h4>Pikmin no encontrado</h4>
             {% endif %}
  {% endblock %}

@@ -16,6 +16,16 @@ class PikminRepository extends ServiceEntityRepository
         parent::__construct($registry, Pikmin::class);
     }
 
+    public function findByName($text): array
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->andWhere('p.nombre LIKE :text')
+            ->setParameter('text', '%' . $text . '%')
+            ->getQuery();
+
+        return $qb->execute();
+    }
+
     //    /**
     //     * @return Pikmin[] Returns an array of Pikmin objects
     //     */

@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
-{% block title %} Pikmin {% endblock %}
 {% block body %}
 
-    <h1>Pikmin</h1>
-    <h2>Bienvenido a la web de Pikmin.</h2>
-
+    <h1>Pikmins</h1>
+    <h2>Bienvenido a la web de pikmins.</h2>
     <p>Página de inicio</p>
 
+    {% for pikmin in pikmins %}
+        {{ include ('partials/datos_pikmin.html.twig', {'pikmin': pikmin})}}
+    {% endfor %}
 {% endblock %}
