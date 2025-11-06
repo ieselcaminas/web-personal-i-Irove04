@@ -1,11 +1,36 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}Inicio Pikmin{% endblock %}
+
 {% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-3 text-success">Pikmins</h1>
+        <h2 class="text-muted">Bienvenido a la web de Pikmins</h2>
+        <p>Página de inicio</p>
 
-    <h1>Pikmins</h1>
-    <h2>Bienvenido a la web de pikmins.</h2>
-    <p>Página de inicio</p>
+        <div class="mt-4">
+            {% for pikmin in pikmins %}
+                <div class="card mb-3 p-3 shadow-sm rounded">
+                    {{ include('partials/datos_pikmin.html.twig', {'pikmin': pikmin}) }}
 
-    {% for pikmin in pikmins %}
-        {{ include ('partials/datos_pikmin.html.twig', {'pikmin': pikmin})}}
-    {% endfor %}
+                    <div class="mt-3">
+                        <a href="{{ path('editar', {'codigo': pikmin.id}) }}" class="btn btn-primary btn-sm me-2">
+                            Editar
+                        </a>
+                        <a href="{{ path('eliminar_pikmin', {'id': pikmin.id}) }}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('¿Seguro que quieres eliminar a {{ pikmin.nombre }}? 😢');">
+                            Eliminar
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <p class="text-muted">No hay Pikmins registrados todavía</p>
+            {% endfor %}
+        </div>
+
+        <a href="{{ path('nuevo') }}" class="btn btn-success mt-4">
+            Crear nuevo Pikmin
+        </a>
+    </div>
 {% endblock %}
