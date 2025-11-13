@@ -1,24 +1,97 @@
-{# templates/login/index.html.twig #}
-
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+    <style>
+        body {
+            background: url('{{ asset('images/pikmin_bg.png') }}') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+        }
 
-    <form action="{{ path('app_login') }}" method="post">
-        <label for="username">Email:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+        .login-container {
+            max-width: 400px;
+            margin: 5rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password"/>
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 1.5rem;
+        }
 
-        {# If you want to control the URL the user is redirected to on success
+        label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-weight: 500;
+            color: #333;
+        }
 
-        <input type="hidden" name="_target_path" value="/account"/> #}
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.6rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
 
-        <button type="submit">login</button>
-    </form>
+        input:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
 
+        button {
+            width: 100%;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 8px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: translateY(-1px);
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+    </style>
+
+    <div class="login-container">
+        <h1>Login</h1>
+
+        {% if error %}
+            <div class="error-message">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
+
+        <form action="{{ path('app_login') }}" method="post">
+            <label for="username">Email:</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" />
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="_password" />
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
 {% endblock %}

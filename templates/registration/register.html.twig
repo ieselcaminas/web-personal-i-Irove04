@@ -3,17 +3,113 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <style>
+        body {
+            background: url('{{ asset('images/pikmin_bg.png') }}') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+        }
 
-    {{ form_errors(registrationForm) }}
+        .register-container {
+            max-width: 450px;
+            margin: 4rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 1.5rem;
+        }
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+        label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        /* Campos estándar */
+        .pikmin-form input {
+            width: 100%;
+            padding: 0.6rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .pikmin-form input:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+        /* Checkbox */
+        .pikmin-form .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .pikmin-form .form-check input[type="checkbox"] {
+            width: auto;
+            margin-right: 0.5rem;
+            padding: 0;
+        }
+
+        .form-error {
+            color: red;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 8px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: translateY(-1px);
+        }
+    </style>
+
+    <div class="register-container">
+        <h1>Register</h1>
+
+        {{ form_errors(registrationForm) }}
+
+        {{ form_start(registrationForm, {'attr': {'class': 'pikmin-form'}}) }}
+
+        {# Email con label #}
+        {{ form_label(registrationForm.email, 'Email') }}
+        {{ form_widget(registrationForm.email, {'attr': {'class': 'pikmin-form'}}) }}
+
+        {# Password con label #}
+        {{ form_label(registrationForm.plainPassword, 'Contraseña') }}
+        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'pikmin-form'}}) }}
+
+        {# Checkbox form-check #}
+        <div class="form-check">
+            {{ form_widget(registrationForm.agreeTerms) }}
+            {{ form_label(registrationForm.agreeTerms) }}
+        </div>
+
+        <button type="submit">Register</button>
+        {{ form_end(registrationForm) }}
+    </div>
 {% endblock %}
