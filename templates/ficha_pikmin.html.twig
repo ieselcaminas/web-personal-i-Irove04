@@ -1,13 +1,26 @@
 {% extends 'base.html.twig' %}
-{% block title %}PIKMIN{% endblock %}
-{% block body%}
-        <h1>Ficha del pikmin</h1>
-            {% if pikmin %}
-                <ul>
-                    <li><strong>{{ pikmin.nombre }}</strong></li>
-                    <li><strong>Color </strong>{{ pikmin.color }}</li>
-                </ul>
-            {% else %}
-                <h4>Pikmin no encontrado</h4>
-            {% endif %}
- {% endblock %}
+
+{% block title %}Ficha del Pikmin{% endblock %}
+
+{% block body %}
+    {# Fondo con asset() #}
+    <style>
+        body {
+            background: url('{{ asset('images/pikmin_bg.png') }}') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+        }
+    </style>
+
+    <div class="pikmin-container {{ pikmin.color.Nombre|lower }}">
+        {% if pikmin %}
+            <h1>{{ pikmin.nombre }}</h1>
+            <ul>
+                <li><strong>Color:</strong> {{ pikmin.color.Nombre }}</li>
+            </ul>
+        {% else %}
+            <h4 class="no-found">Pikmin no encontrado</h4>
+        {% endif %}
+    </div>
+{% endblock %}

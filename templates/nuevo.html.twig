@@ -1,8 +1,82 @@
 {% extends 'base.html.twig' %}
-{% block title %}Nuevo pikmin{% endblock %}
+{% block title %}Nuevo Pikmin{% endblock %}
+
 {% block body %}
+    <style>
+        body {
+            background: url('{{ asset('images/pikmin_bg.png') }}') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+        }
 
-    <h1>Nuevo pikmin</h1>
+        h1{
+            color: #45a049;
+        }
 
-    {{ form(formulario) }}
+        /* Contenedor del formulario */
+        .form-container {
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Campos del formulario */
+        .pikmin-form input,
+        .pikmin-form select,
+        .pikmin-form textarea {
+            width: 100%;
+            padding: 0.6rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .pikmin-form input:focus,
+        .pikmin-form select:focus,
+        .pikmin-form textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+        /* Botón bonito */
+        .pikmin-form button {
+            width: 100%;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 8px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pikmin-form button:hover {
+            background-color: #45a049;
+            transform: translateY(-1px);
+        }
+
+        /* Mensajes de error */
+        .pikmin-form .form-error {
+            color: red;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+
+    <div class="form-container">
+        <h1>Nuevo Pikmin</h1>
+
+        {{ form_start(formulario, {'attr': {'class': 'pikmin-form'}}) }}
+        {# Renderiza todos los campos del formulario #}
+        {{ form_widget(formulario) }}
+        {{ form_end(formulario) }}
+    </div>
 {% endblock %}

@@ -99,6 +99,17 @@ final class PikminController extends AbstractController
             'pikmins' => $pikmins
         ]);
     }
+    #[Route('/pikmins/{codigo}', name: 'ficha_pikmin')]
+    public function ficha_pikmin(ManagerRegistry $doctrine, $codigo): Response
+    {
+        $repositorio = $doctrine->getRepository(Pikmin::class);
+
+        $pikmin = $repositorio->find($codigo);
+
+        return $this->render('ficha_pikmin.html.twig', [
+            'pikmin' => $pikmin
+        ]);
+    }
 
     #[Route('/', name: 'inicio')]
     public function inicio(ManagerRegistry $doctrine): Response
@@ -133,13 +144,4 @@ final class PikminController extends AbstractController
         5 => ["nombre" => "Pikmin3","color" => "azul"],
     ];
 
-    #[Route('/pikmins/{codigo}', name: 'ficha_pikmin')]
-    public function ficha($codigo): Response
-    {
-        $resultado = ($this->pikmins[$codigo] ?? null);
-
-        return $this->render('ficha_pikmin.html.twig', [
-            'pikmin' => $resultado
-        ]);
-    }
 }
