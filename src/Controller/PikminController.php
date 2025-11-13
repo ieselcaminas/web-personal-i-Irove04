@@ -30,7 +30,8 @@ final class PikminController extends AbstractController
             return $this->redirectToRoute('ficha_pikmin', ["codigo" => $pikmin->getId()]);
         }
         return $this->render('nuevo.html.twig', array(
-            'formulario' => $formulario->createView()
+            'formulario' => $formulario->createView(),
+            'accion' => 'Nuevo',
         ));
     }
 
@@ -78,7 +79,8 @@ final class PikminController extends AbstractController
                 return $this->redirectToRoute('ficha_pikmin', ["codigo" => $pikmin->getId()]);
             }
             return $this->render('nuevo.html.twig', array(
-                'formulario' => $formulario->createView()
+                'formulario' => $formulario->createView(),
+                'accion' => 'Editar'
             ));
 
         }else{
