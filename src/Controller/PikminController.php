@@ -15,6 +15,8 @@ final class PikminController extends AbstractController
 {
     #[Route('/pikmins/nuevo', name: 'nuevo')]
     public function nuevo(ManagerRegistry $doctrine, Request $request) {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $pikmin = new Pikmin();
         $formulario = $this->createForm(PikminType::class, $pikmin);
         $formulario->handleRequest($request);
@@ -33,8 +35,9 @@ final class PikminController extends AbstractController
     }
 
     #[Route('/pikmins/eliminar/{id}', name: 'eliminar_pikmin', requirements:["id"=>"\d+"])]
-    public function eliminar(ManagerRegistry $doctrine, int $id): Response
-    {
+    public function eliminar(ManagerRegistry $doctrine, int $id): Response {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+
         $entityManager = $doctrine->getManager();
         $repositorio = $doctrine->getRepository(Pikmin::class);
         $pikmin = $repositorio->find($id);
@@ -50,12 +53,14 @@ final class PikminController extends AbstractController
                 return new Response("Error eliminando Pikmin: " . $e->getMessage());
             }
         } else {
-            return new Response("⚠Pikmin no encontrado");
+            return new Response("Pikmin no encontrado");
         }
     }
 
+
     #[Route('/pikmins/editar/{codigo}', name: 'editar', requirements:["codigo"=>"\d+"])]
     public function editar(ManagerRegistry $doctrine, Request $request, int $codigo) {
+        $this->denyAccessUnlessGranted('ROLE_USER');
 
         $repositorio = $doctrine->getRepository(Pikmin::class);
         $pikmin = $repositorio->find($codigo);
@@ -93,55 +98,6 @@ final class PikminController extends AbstractController
         return $this->render('lista_pikmin.html.twig', [
             'pikmins' => $pikmins
         ]);
-    }
-
-    #[Route('/pikmins/update/{id}/{nombre}', name: 'modificar_pikmin')]
-    public function update(ManagerRegistry $doctrine, $id, $nombre): Response
-    {
-        $entityManager = $doctrine->getManager();
-        $repositorio = $doctrine->getRepository(Pikmin::class);
-        $pikmin = $repositorio->find($id);
-
-        if ($pikmin) {
-            $pikmin->setNombre($nombre);
-
-            try
-            {
-                $entityManager->flush();
-                return $this->render('ficha_pikmin.html.twig', [
-                    'pikmin' => $pikmin
-                ]);
-            } catch (\Exception $e) {
-                return new Response("Error insertando pikmin");
-            }
-        } else {
-            return $this->render('ficha_pikmin.html.twig', [
-                'pikmin' => null
-            ]);
-        }
-    }
-
-    #[Route('/pikmins/delete/{id}', name: 'modificar_pikmin')]
-    public function delete(ManagerRegistry $doctrine, $id): Response
-    {
-        $entityManager = $doctrine->getManager();
-        $repositorio = $doctrine->getRepository(Pikmin::class);
-        $pikmin = $repositorio->find($id);
-
-        if ($pikmin) {
-            try
-            {
-                $entityManager->remove($pikmin);
-                $entityManager->flush();
-                return new Response("Pikmin eliminado");
-            } catch (\Exception $e) {
-                return new Response("Error eliminado pikmin");
-            }
-        } else {
-            return $this->render('ficha_pikmin.html.twig', [
-                'pikmin' => null
-            ]);
-        }
     }
 
     #[Route('/', name: 'inicio')]
